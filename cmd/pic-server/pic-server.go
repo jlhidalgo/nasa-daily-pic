@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -31,6 +32,10 @@ func getPicOfDay() (Picture, error) {
 	resp, err := http.Get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
 	if err != nil {
 		return picture, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return Picture{}, errors.New("status not OKAY")
 	}
 
 	defer resp.Body.Close()
