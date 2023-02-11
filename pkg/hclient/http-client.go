@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type IClient interface {
-	Get(uri string, params map[string]string) ([]byte, error)
-}
-
 func Get(uri string, params map[string]string) ([]byte, error) {
 	queryString := getQueryString(params)
 	uri = fmt.Sprintf("%s?%s", uri, queryString)
