@@ -2,10 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
-	"net/http"
+
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/hclient"
 )
 
 type (
@@ -29,20 +28,12 @@ func main() {
 func getPicOfDay() (Picture, error) {
 
 	picture := Picture{}
-	resp, err := http.Get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
+	uri := "https://api.nasa.gov/planetary/apod"
+	params := map[string]string{"api_key": "DEMO_KEY"}
+
+	body, err := hclient.Get(uri, params)
 	if err != nil {
-		return picture, err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return Picture{}, errors.New("status not OKAY")
-	}
-
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-
-	if err != nil {
-		return Picture{}, err
+		fmt.Println("There was an error:", err)
 	}
 
 	err = json.Unmarshal(body, &picture)
