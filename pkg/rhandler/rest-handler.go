@@ -1,16 +1,20 @@
-package hclient
+package rhandler
 
 import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/controller"
 )
 
 func Get(uri string, params map[string]string) ([]byte, error) {
 	queryString := getQueryString(params)
 	uri = fmt.Sprintf("%s?%s", uri, queryString)
 
-	resp, err := http.Get(uri)
+	httpClient := controller.NewHttpClient()
+
+	resp, err := httpClient.Get(uri)
 	if err != nil {
 		return nil, err
 	}
@@ -19,6 +23,7 @@ func Get(uri string, params map[string]string) ([]byte, error) {
 		return nil, fmt.Errorf("response failed with status code: %v", resp.StatusCode)
 	}
 
+	// extract this functionality
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 

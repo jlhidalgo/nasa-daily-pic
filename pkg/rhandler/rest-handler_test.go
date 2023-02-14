@@ -1,4 +1,4 @@
-package hclient
+package rhandler
 
 import "testing"
 
