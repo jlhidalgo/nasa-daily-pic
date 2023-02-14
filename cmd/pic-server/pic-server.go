@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/jlhidalgo/nasa-daily-pic/pkg/hclient"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
 )
 
 type (
@@ -31,7 +31,7 @@ func getPicOfDay() (Picture, error) {
 	uri := "https://api.nasa.gov/planetary/apod"
 	params := map[string]string{"api_key": "DEMO_KEY"}
 
-	body, err := hclient.Get(uri, params)
+	body, err := rhandler.Get(uri, params)
 	if err != nil {
 		fmt.Println("There was an error:", err)
 	}
