@@ -5,14 +5,14 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/jlhidalgo/nasa-daily-pic/pkg/controller"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 )
 
 func Get(uri string, params map[string]string) ([]byte, error) {
 	queryString := getQueryString(params)
 	uri = fmt.Sprintf("%s?%s", uri, queryString)
 
-	httpClient := controller.NewHttpClient()
+	httpClient := client.NewHttpClient()
 
 	resp, err := httpClient.Get(uri)
 	if err != nil {
