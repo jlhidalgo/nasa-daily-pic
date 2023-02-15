@@ -8,13 +8,23 @@ import (
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 )
 
-func Get(uri string, params map[string]string) ([]byte, error) {
+type (
+	RestHandler struct {
+		HttpClient client.IHttpClient
+	}
+)
+
+func NewRestHandler(hClient client.IHttpClient) RestHandler {
+	return RestHandler{
+		HttpClient: hClient,
+	}
+}
+
+func (r RestHandler) Get(uri string, params map[string]string) ([]byte, error) {
 	queryString := getQueryString(params)
 	uri = fmt.Sprintf("%s?%s", uri, queryString)
 
-	httpClient := client.NewHttpClient()
-
-	resp, err := httpClient.Get(uri)
+	resp, err := r.HttpClient.Get(uri)
 	if err != nil {
 		return nil, err
 	}
