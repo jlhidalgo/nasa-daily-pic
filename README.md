@@ -69,3 +69,4 @@ Inspiration, code snippets, etc.
 * [Astronomy picture of the day](https://apod.nasa.gov/apod/astropix.html)
 * [Testing with GoMock: A Tutorial](https://gist.github.com/thiagozs/4276432d12c2e5b152ea15b3f8b0012e)
 * [gomock](https://github.com/golang/mock)
+* [Testify](https://github.com/stretchr/testify)
