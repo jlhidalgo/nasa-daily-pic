@@ -33,7 +33,7 @@ func (r RestHandler) Get(uri string, params map[string]string) ([]byte, error) {
 		return nil, fmt.Errorf("response failed with status code: %v", resp.StatusCode)
 	}
 
-	// extract this functionality
+	// TODO: extract this functionality
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 
