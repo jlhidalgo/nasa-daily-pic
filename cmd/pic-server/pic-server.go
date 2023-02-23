@@ -32,7 +32,7 @@ func main() {
 	fmt.Println(picture, err)
 
 	http.HandleFunc("/", homepageFunc)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 
 func getPicOfDay() (Picture, error) {
