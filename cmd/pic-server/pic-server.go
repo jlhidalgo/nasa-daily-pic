@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
@@ -24,13 +25,13 @@ type (
 )
 
 func homepageFunc(rw http.ResponseWriter, r *http.Request) {
-	http.ServeFile(rw, r, "./web/template/index.html")
+	t, _ := template.ParseFiles("./web/template/index.html")
+	picture, _ := getPicOfDay()
+
+	t.Execute(rw, picture)
 }
 
 func main() {
-	picture, err := getPicOfDay()
-	fmt.Println(picture, err)
-
 	http.HandleFunc("/", homepageFunc)
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
