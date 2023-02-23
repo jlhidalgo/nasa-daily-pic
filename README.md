@@ -70,3 +70,4 @@ Inspiration, code snippets, etc.
 * [Testing with GoMock: A Tutorial](https://gist.github.com/thiagozs/4276432d12c2e5b152ea15b3f8b0012e)
 * [gomock](https://github.com/golang/mock)
 * [Testify](https://github.com/stretchr/testify)
+* [Writing Web Applications](https://go.dev/doc/articles/wiki/)
