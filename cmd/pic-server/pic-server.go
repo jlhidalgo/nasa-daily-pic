@@ -3,6 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"log"
+	"net/http"
 
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
@@ -21,9 +24,16 @@ type (
 	}
 )
 
+func homepageFunc(rw http.ResponseWriter, r *http.Request) {
+	io.WriteString(rw, "Hello world")
+}
+
 func main() {
 	picture, err := getPicOfDay()
 	fmt.Println(picture, err)
+
+	http.HandleFunc("/", homepageFunc)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func getPicOfDay() (Picture, error) {
