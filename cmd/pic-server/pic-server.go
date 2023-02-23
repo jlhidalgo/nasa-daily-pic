@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 
@@ -25,7 +24,7 @@ type (
 )
 
 func homepageFunc(rw http.ResponseWriter, r *http.Request) {
-	io.WriteString(rw, "Hello world")
+	http.ServeFile(rw, r, "./web/template/index.html")
 }
 
 func main() {
