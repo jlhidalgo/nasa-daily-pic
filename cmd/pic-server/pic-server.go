@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"text/template"
 
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/server"
 )
 
 type (
@@ -32,8 +32,10 @@ func homepageFunc(rw http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", homepageFunc)
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	// TODO: make these arguments configurable
+	serv := server.NewServer("", "8081")
+	serv.AddHandleFunc("/", homepageFunc)
+	serv.Run()
 }
 
 func getPicOfDay() (Picture, error) {
