@@ -18,6 +18,10 @@ func NewServer(host string, port string) ServerConf {
 	}
 }
 
+func (s ServerConf) AddHandleFunc(pattern string, function func(http.ResponseWriter, *http.Request)) {
+	http.HandleFunc(pattern, function)
+}
+
 func (s ServerConf) Run() {
 	addr := s.Hostname + ":" + s.Port
 	fmt.Println("Server is running at", addr)

@@ -32,8 +32,9 @@ func homepageFunc(rw http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", homepageFunc)
+	// TODO: make these arguments configurable
 	serv := server.NewServer("", "8081")
+	serv.AddHandleFunc("/", homepageFunc)
 	serv.Run()
 }
 
