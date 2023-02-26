@@ -7,21 +7,9 @@ import (
 	"text/template"
 
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/models"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/server"
-)
-
-type (
-	Picture struct {
-		Copyright      string `json:"copyright,omitempty"`
-		Date           string `json:"date,omitempty"`
-		Explanation    string `json:"explanation,omitempty"`
-		Hdurl          string `json:"hdurl,omitempty"`
-		MediaType      string `json:"media_type,omitempty"`
-		ServiceVersion string `json:"service_version,omitempty"`
-		Title          string `json:"title,omitempty"`
-		Url            string `json:"url,omitempty"`
-	}
 )
 
 func homepageFunc(rw http.ResponseWriter, r *http.Request) {
@@ -38,9 +26,9 @@ func main() {
 	serv.Run()
 }
 
-func getPicOfDay() (Picture, error) {
+func getPicOfDay() (models.Picture, error) {
 
-	picture := Picture{}
+	picture := models.Picture{}
 	uri := "https://api.nasa.gov/planetary/apod"
 	params := map[string]string{"api_key": "DEMO_KEY"}
 
@@ -54,7 +42,7 @@ func getPicOfDay() (Picture, error) {
 
 	err = json.Unmarshal(body, &picture)
 	if err != nil {
-		return Picture{}, err
+		return models.Picture{}, err
 	}
 
 	return picture, nil
