@@ -13,29 +13,42 @@ import (
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/server"
 )
 
-func homepageFunc(rw http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("./web/template/index.html")
-	picture, _ := getPicOfDay()
+func homepageFunc(w http.ResponseWriter, r *http.Request) {
+	picture, err := getPicOfDay()
 
-	t.Execute(rw, picture)
+	if err != nil {
+		// TODO: actually this should return an error in HTML
+		fmt.Println("failed to obtain the picture of the day:", err)
+		generateInternalErrorPage(w)
+		return
+	}
+
+	t, err := template.ParseFiles("./web/template/index.html")
+	if err != nil {
+		// TODO: maybe parse and open different page for internal error
+		fmt.Println("failed to parse file: ", err)
+		generateInternalErrorPage(w)
+		return
+	}
+
+	t.Execute(w, picture)
 }
 
 func main() {
-	// TODO: make these arguments configurable
 	serv := server.NewServer(configs.SERVER_HOSTNAME, configs.SERVER_PORT)
 	serv.AddHandleFunc("/", homepageFunc)
 	serv.Run()
 }
 
 func getPicOfDay() (models.Picture, error) {
-
+	// TODO: move this code out from this function
 	picture := models.Picture{}
 	httpClient := client.NewHttpClient()
 	restHandler := rhandler.NewRestHandler(httpClient)
 
 	body, err := restHandler.Get(configs.CLIENT_APOD_URI, configs.CLIENT_APOD_PARAMS)
 	if err != nil {
-		fmt.Println("There was an error:", err)
+		return models.Picture{}, err
 	}
 
 	err = json.Unmarshal(body, &picture)
@@ -45,4 +58,9 @@ func getPicOfDay() (models.Picture, error) {
 
 	return picture, nil
 
+}
+
+func generateInternalErrorPage(w http.ResponseWriter) {
+	w.WriteHeader(500)
+	w.Write([]byte("<html><body>Internal error!</body></html>"))
 }
