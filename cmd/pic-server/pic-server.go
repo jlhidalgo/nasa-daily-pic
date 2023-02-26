@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"text/template"
 
+	"github.com/jlhidalgo/nasa-daily-pic/configs"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/client"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/models"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
@@ -21,7 +22,7 @@ func homepageFunc(rw http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// TODO: make these arguments configurable
-	serv := server.NewServer("", "8081")
+	serv := server.NewServer(configs.SERVER_HOSTNAME, configs.SERVER_PORT)
 	serv.AddHandleFunc("/", homepageFunc)
 	serv.Run()
 }
@@ -29,13 +30,10 @@ func main() {
 func getPicOfDay() (models.Picture, error) {
 
 	picture := models.Picture{}
-	uri := "https://api.nasa.gov/planetary/apod"
-	params := map[string]string{"api_key": "DEMO_KEY"}
-
 	httpClient := client.NewHttpClient()
 	restHandler := rhandler.NewRestHandler(httpClient)
 
-	body, err := restHandler.Get(uri, params)
+	body, err := restHandler.Get(configs.CLIENT_APOD_URI, configs.CLIENT_APOD_PARAMS)
 	if err != nil {
 		fmt.Println("There was an error:", err)
 	}
