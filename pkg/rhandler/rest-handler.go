@@ -33,7 +33,10 @@ func (r RestHandler) Get(uri string, params map[string]string) ([]byte, error) {
 		return nil, fmt.Errorf("response failed with status code: %v", resp.StatusCode)
 	}
 
-	// TODO: extract this functionality
+	return getBody(resp)
+}
+
+func getBody(resp *http.Response) ([]byte, error) {
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 
