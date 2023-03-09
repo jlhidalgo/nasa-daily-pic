@@ -20,10 +20,7 @@ func NewRestHandler(hClient client.IHttpClient) RestHandler {
 	}
 }
 
-func (r RestHandler) Get(uri string, params map[string]string) ([]byte, error) {
-	queryString := getQueryString(params)
-	uri = fmt.Sprintf("%s?%s", uri, queryString)
-
+func (r RestHandler) Get(uri string) ([]byte, error) {
 	resp, err := r.HttpClient.Get(uri)
 	if err != nil {
 		return nil, err
@@ -45,18 +42,4 @@ func getBody(resp *http.Response) ([]byte, error) {
 	}
 
 	return body, nil
-}
-
-func getQueryString(params map[string]string) string {
-	queryString := ""
-	for key, value := range params {
-		if len(value) > 0 {
-			if len(queryString) > 0 {
-				queryString += "&"
-			}
-			queryString = fmt.Sprintf("%s%s=%s", queryString, key, value)
-		}
-
-	}
-	return queryString
 }

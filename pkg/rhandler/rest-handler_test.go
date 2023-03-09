@@ -108,7 +108,11 @@ func Test_Get(t *testing.T) {
 			hclientMock.EXPECT().Get(gomock.Any()).Return(tc.httpClientResult(""))
 
 			rhandler := NewRestHandler(hclientMock)
-			resp, err := rhandler.Get("http://localhost", map[string]string{})
+			uri := &Uri{
+				"http://localhost",
+				map[string]string{},
+			}
+			resp, err := rhandler.Get(uri.GetUri())
 			if tc.expectedError {
 				assert.NotNil(t, err)
 				assert.Nil(t, resp)
