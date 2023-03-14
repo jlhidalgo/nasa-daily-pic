@@ -110,7 +110,7 @@ func TestGetUri(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			uri := &Uri{
-				Uri:    tc.url,
+				Path:   tc.url,
 				Params: tc.parameters,
 			}
 			output, err := uri.GetUri()

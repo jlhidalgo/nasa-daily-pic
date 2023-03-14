@@ -48,7 +48,7 @@ func getPicOfDay() (models.Picture, error) {
 	restHandler := rhandler.NewRestHandler(httpClient)
 
 	uri := &uri.Uri{
-		Uri:    configs.CLIENT_APOD_URI,
+		Path:   configs.CLIENT_APOD_URI,
 		Params: configs.CLIENT_APOD_PARAMS,
 	}
 

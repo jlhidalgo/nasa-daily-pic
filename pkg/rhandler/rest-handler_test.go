@@ -56,7 +56,7 @@ func Test_Get(t *testing.T) {
 
 			rhandler := NewRestHandler(hclientMock)
 			uri := &uri.Uri{
-				Uri:    "http://localhost",
+				Path:   "http://localhost",
 				Params: map[string]string{},
 			}
 			resUri, _ := uri.GetUri()
