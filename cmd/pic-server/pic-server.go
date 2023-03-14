@@ -11,7 +11,7 @@ import (
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/models"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/rhandler"
 	"github.com/jlhidalgo/nasa-daily-pic/pkg/server"
-	"github.com/jlhidalgo/nasa-daily-pic/pkg/utils"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/uri"
 )
 
 func homepageFunc(w http.ResponseWriter, r *http.Request) {
@@ -47,7 +47,7 @@ func getPicOfDay() (models.Picture, error) {
 	httpClient := client.NewHttpClient()
 	restHandler := rhandler.NewRestHandler(httpClient)
 
-	uri := &utils.Uri{
+	uri := &uri.Uri{
 		Uri:    configs.CLIENT_APOD_URI,
 		Params: configs.CLIENT_APOD_PARAMS,
 	}

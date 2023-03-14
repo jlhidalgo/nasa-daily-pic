@@ -9,7 +9,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	mock_client "github.com/jlhidalgo/nasa-daily-pic/pkg/client/mock"
-	"github.com/jlhidalgo/nasa-daily-pic/pkg/utils"
+	"github.com/jlhidalgo/nasa-daily-pic/pkg/uri"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -55,7 +55,7 @@ func Test_Get(t *testing.T) {
 			hclientMock.EXPECT().Get(gomock.Any()).Return(tc.httpClientResult(""))
 
 			rhandler := NewRestHandler(hclientMock)
-			uri := &utils.Uri{
+			uri := &uri.Uri{
 				Uri:    "http://localhost",
 				Params: map[string]string{},
 			}
